@@ -58,27 +58,32 @@ class UserController extends Controller
         return view('users.show', ['user' => $user]);
     }
 
+    // 更新用フォーム画面へ移動
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', ['user' => $user]);
     }
 
+    // 実際の更新処理
+    // 終わったら、そのユーザのページへ移動
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $user->name = $request->name;
+        $user->save();
+        return redirect('users/'.$user->id);
     }
 
     /**
